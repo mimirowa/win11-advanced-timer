@@ -5,13 +5,13 @@
   "body": [
     {
       "type": "TextBlock",
-      "text": "Timer",
+      "text": "${activeName}",
       "weight": "Bolder",
       "size": "Medium"
     },
     {
       "type": "TextBlock",
-      "text": "00:00",
+      "text": "${remainingText}",
       "horizontalAlignment": "Center",
       "size": "ExtraLarge"
     },
@@ -103,10 +103,11 @@
       ],
       "rows": [
         {
+          "$data": "${data.recents}",
           "cells": [
             {
               "type": "TableCell",
-              "items": [ { "type": "TextBlock", "text": "1 min" } ]
+              "items": [ { "type": "TextBlock", "text": "${name}" } ]
             },
             {
               "type": "TableCell",
@@ -118,31 +119,7 @@
                       "type": "Action.Execute",
                       "title": "Restart",
                       "verb": "restartRecent",
-                      "data": { "durationSeconds": 60 }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "cells": [
-            {
-              "type": "TableCell",
-              "items": [ { "type": "TextBlock", "text": "5 min" } ]
-            },
-            {
-              "type": "TableCell",
-              "items": [
-                {
-                  "type": "ActionSet",
-                  "actions": [
-                    {
-                      "type": "Action.Execute",
-                      "title": "Restart",
-                      "verb": "restartRecent",
-                      "data": { "durationSeconds": 300 }
+                      "data": { "durationSeconds": "${durationSeconds}" }
                     }
                   ]
                 }
