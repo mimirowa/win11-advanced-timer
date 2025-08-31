@@ -21,17 +21,20 @@
         {
           "type": "Action.Execute",
           "title": "Pause",
-          "verb": "pause"
+          "verb": "pause",
+          "data": { "id": "${activeId}" }
         },
         {
           "type": "Action.Execute",
           "title": "Resume",
-          "verb": "resume"
+          "verb": "resume",
+          "data": { "id": "${activeId}" }
         },
         {
           "type": "Action.Execute",
           "title": "Cancel",
-          "verb": "cancel"
+          "verb": "cancel",
+          "data": { "id": "${activeId}" }
         }
       ]
     },
@@ -134,7 +137,8 @@
     {
       "type": "Action.Execute",
       "title": "Open HUD",
-      "verb": "openHud"
+      "verb": "openHud",
+      "data": { "id": "${activeId}" }
     }
   ]
 }
