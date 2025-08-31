@@ -92,6 +92,11 @@ public class TimerService
         return _state.ActiveTimers.Select(UpdateForDisplay).ToList();
     }
 
+    public IReadOnlyList<RecentItem> GetRecents()
+    {
+        return _state.Recents.ToList();
+    }
+
     private TimerItem UpdateForDisplay(TimerItem item)
     {
         if (item.IsPaused)
