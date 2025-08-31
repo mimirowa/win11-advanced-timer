@@ -89,8 +89,8 @@ public sealed class WidgetProvider : IWidgetProvider
         switch (args.Verb)
         {
             case "startPreset":
-            case "startCustom":
             case "restartRecent":
+            {
                 TimeSpan dur = TimeSpan.Zero;
                 string? name = null;
                 if (root.TryGetProperty("durationSeconds", out var durProp) && durProp.TryGetInt32(out var secs))
@@ -106,6 +106,29 @@ public sealed class WidgetProvider : IWidgetProvider
                     _service.Start(dur, name, wid);
                 }
                 break;
+            }
+            case "startCustom":
+            {
+                TimeSpan dur = TimeSpan.Zero;
+                string? name = null;
+                if (root.TryGetProperty("minutes", out var minProp) && minProp.TryGetInt32(out var mins))
+                {
+                    dur += TimeSpan.FromMinutes(mins);
+                }
+                if (root.TryGetProperty("seconds", out var secProp) && secProp.TryGetInt32(out var secs))
+                {
+                    dur += TimeSpan.FromSeconds(secs);
+                }
+                if (root.TryGetProperty("name", out var nameProp))
+                {
+                    name = nameProp.GetString();
+                }
+                if (dur > TimeSpan.Zero)
+                {
+                    _service.Start(dur, name, wid);
+                }
+                break;
+            }
             case "pause":
                 if (TryGetId(root, out var idp))
                 {

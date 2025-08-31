@@ -47,19 +47,19 @@
           "type": "Action.Execute",
           "title": "1 min",
           "verb": "startPreset",
-          "data": { "seconds": 60 }
+          "data": { "durationSeconds": 60 }
         },
         {
           "type": "Action.Execute",
           "title": "5 min",
           "verb": "startPreset",
-          "data": { "seconds": 300 }
+          "data": { "durationSeconds": 300 }
         },
         {
           "type": "Action.Execute",
           "title": "10 min",
           "verb": "startPreset",
-          "data": { "seconds": 600 }
+          "data": { "durationSeconds": 600 }
         }
       ]
     },
@@ -118,7 +118,7 @@
                       "type": "Action.Execute",
                       "title": "Restart",
                       "verb": "restartRecent",
-                      "data": { "seconds": 60 }
+                      "data": { "durationSeconds": 60 }
                     }
                   ]
                 }
@@ -142,7 +142,7 @@
                       "type": "Action.Execute",
                       "title": "Restart",
                       "verb": "restartRecent",
-                      "data": { "seconds": 300 }
+                      "data": { "durationSeconds": 300 }
                     }
                   ]
                 }
