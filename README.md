@@ -16,21 +16,25 @@ The HUD uses the high resolution system clock and updates every frame. The widge
 ### Steps
 1. Clone the repository.
 ```powershell
-git clone https://github.com/your-username/win11-advanced-timer.git
+git clone https://github.com/mimirowa/win11-advanced-timer.git
 cd win11-advanced-timer
 ```
 2. Restore dependencies.
 ```powershell
 dotnet restore src/AdvancedTimer.sln
 ```
-3. Publish the projects.
+3. (Optional) Publish RID-specific outputs for both the app and widget provider. This is only required if you need separate binaries for a particular runtime identifier; otherwise the build is handled during MSIX packaging.
 ```powershell
-dotnet publish src/AdvancedTimer.App/AdvancedTimer.App.csproj -c Release -r win10-x64
-dotnet publish src/AdvancedTimer.WidgetProvider/AdvancedTimer.WidgetProvider.csproj -c Release -r win10-x64
+dotnet publish src/AdvancedTimer.App/AdvancedTimer.App.csproj -c Release -r <RID>
+dotnet publish src/AdvancedTimer.WidgetProvider/AdvancedTimer.WidgetProvider.csproj -c Release -r <RID>
 ```
 4. Create the MSIX package.
 ```powershell
-msbuild src/AdvancedTimer.App/AdvancedTimer.App.csproj /t:Publish /p:Configuration=Release /p:GenerateAppxPackageOnBuild=true
+msbuild src/AdvancedTimer.App/AdvancedTimer.App.csproj ^
+    /p:Configuration=Release ^
+    /p:Platform=x64 ^
+    /p:GenerateAppxPackageOnBuild=true ^
+    /p:AppxBundle=Always
 ```
 
 The packaged binaries appear under `src/AdvancedTimer.App/bin/Release`. Install the generated `.msixbundle` to test the application.
