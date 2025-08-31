@@ -122,7 +122,7 @@
                       "type": "Action.Execute",
                       "title": "Restart",
                       "verb": "restartRecent",
-                      "data": { "durationSeconds": "${durationSeconds}" }
+                      "data": { "name": "${name}", "durationSeconds": ${durationSeconds} }
                     }
                   ]
                 }
