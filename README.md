@@ -6,6 +6,34 @@ Win11 Advanced Timer is a Windows 11 timer application that exposes a full scree
 ## Accuracy Model
 The HUD uses the high resolution system clock and updates every frame. The widget relies on the operating system's scheduled refresh cycle, so its display may lag behind the HUD by up to a few seconds. Both read from the same underlying service, but periodic refresh on the widget means minor drift is expected when the timer is active.
 
+## Building a Release
+
+### Prerequisites
+- Windows 11
+- Visual Studio 2022 with the Universal Windows Platform, .NET desktop, and Desktop development with C++ workloads
+- MSIX packaging tools
+
+### Steps
+1. Clone the repository.
+```powershell
+git clone https://github.com/your-username/win11-advanced-timer.git
+cd win11-advanced-timer
+```
+2. Restore dependencies.
+```powershell
+dotnet restore src/AdvancedTimer.sln
+```
+3. Build the solution.
+```powershell
+dotnet build src/AdvancedTimer.sln --configuration Release
+```
+4. Create the MSIX package.
+```powershell
+msbuild src/AdvancedTimer.App/AdvancedTimer.App.csproj /t:Publish /p:Configuration=Release /p:GenerateAppxPackageOnBuild=true
+```
+
+The packaged binaries appear under `src/AdvancedTimer.App/bin/Release`. Install the generated `.msixbundle` to test the application.
+
 ## Installation
 The app is packaged as an MSIX for sideloading.
 1. Enable developer mode or allow sideloading in Windows settings.
