@@ -10,5 +10,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../AdvancedTimer.Core/AdvancedTimer.Core.csproj" />
+    <ProjectReference Include="../AdvancedTimer.App/AdvancedTimer.App.csproj" />
   </ItemGroup>
 </Project>
