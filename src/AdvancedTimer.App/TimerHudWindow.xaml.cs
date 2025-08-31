@@ -12,7 +12,7 @@ public sealed partial class TimerHudWindow : Window
 {
     private readonly TimerService _service;
     private readonly Guid _timerId;
-    private readonly DispatcherTimer _dispatcher = new() { Interval = TimeSpan.FromSeconds(1) };
+    private DispatcherTimer? _dispatcher;
 
     public TimerHudWindow(TimerService service, TimerItem item)
     {
@@ -21,8 +21,16 @@ public sealed partial class TimerHudWindow : Window
         _timerId = item.Id;
         NotificationHelper.ScheduleToast(item);
 
-        _dispatcher.Tick += (_, _) => Update();
+        _dispatcher = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+        _dispatcher.Tick += OnTick;
         _dispatcher.Start();
+        Update();
+
+        Closed += OnClosed;
+    }
+
+    private void OnTick(object? sender, object? e)
+    {
         Update();
     }
 
@@ -54,6 +62,16 @@ public sealed partial class TimerHudWindow : Window
     {
         _service.Cancel(_timerId);
         this.Close();
+    }
+
+    private void OnClosed(object sender, WindowEventArgs e)
+    {
+        if (_dispatcher != null)
+        {
+            _dispatcher.Stop();
+            _dispatcher.Tick -= OnTick;
+            _dispatcher = null;
+        }
     }
 
     private void OnRestart(object sender, RoutedEventArgs e)
