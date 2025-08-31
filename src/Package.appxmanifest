@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+         xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10">
+  <Applications>
+    <Application Id="App" Executable="AdvancedTimer.App\AdvancedTimer.App.exe" EntryPoint="AdvancedTimer.App.App">
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="advancedtimer" />
+        </uap:Extension>
+        <com:Extension Category="windows.appExtension">
+          <com:AppExtension Name="com.microsoft.windows.widgets"
+                            Id="AdvancedTimer_Widget"
+                            PublicFolder="Widgets"
+                            Clsid="{B7D7A1D7-84A5-4B5E-9E37-DADB3312EAAA}" />
+        </com:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+</Package>
