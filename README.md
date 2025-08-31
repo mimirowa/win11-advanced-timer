@@ -23,9 +23,10 @@ cd win11-advanced-timer
 ```powershell
 dotnet restore src/AdvancedTimer.sln
 ```
-3. Build the solution.
+3. Publish the projects.
 ```powershell
-dotnet build src/AdvancedTimer.sln --configuration Release
+dotnet publish src/AdvancedTimer.App/AdvancedTimer.App.csproj -c Release -r win10-x64
+dotnet publish src/AdvancedTimer.WidgetProvider/AdvancedTimer.WidgetProvider.csproj -c Release -r win10-x64
 ```
 4. Create the MSIX package.
 ```powershell
