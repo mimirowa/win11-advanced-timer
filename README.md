@@ -23,12 +23,15 @@ cd win11-advanced-timer
 ```powershell
 dotnet restore src/AdvancedTimer.sln
 ```
-3. (Optional) Produce RID-specific outputs. Note that `dotnet publish` is required for both `AdvancedTimer.App` and `AdvancedTimer.WidgetProvider` when targeting a specific runtime identifier; otherwise the build is handled during MSIX packaging.
+3. Publish the app.
 ```powershell
-dotnet publish src/AdvancedTimer.App/AdvancedTimer.App.csproj -c Release -r <RID>
-dotnet publish src/AdvancedTimer.WidgetProvider/AdvancedTimer.WidgetProvider.csproj -c Release -r <RID>
+dotnet publish src/AdvancedTimer.App/AdvancedTimer.App.csproj -c Release -r win10-x64 --self-contained
 ```
-4. Create the MSIX package.
+4. Publish the widget provider.
+```powershell
+dotnet publish src/AdvancedTimer.WidgetProvider/AdvancedTimer.WidgetProvider.csproj -c Release -r win10-x64 --self-contained
+```
+5. Create the MSIX package.
 ```powershell
 msbuild src/AdvancedTimer.App/AdvancedTimer.App.csproj `
     /p:Configuration=Release `
