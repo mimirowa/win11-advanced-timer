@@ -1,3 +1,5 @@
+#nullable enable
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +22,11 @@ public class TimerService
 
     public TimerItem Start(TimeSpan duration, string? name = null, Guid? widgetId = null)
     {
-        name = string.IsNullOrWhiteSpace(name) ? GenerateName() : name;
+        var resolvedName = string.IsNullOrWhiteSpace(name) ? GenerateName() : name;
         var now = DateTimeOffset.UtcNow;
-        var item = new TimerItem(Guid.NewGuid(), name, duration, duration, now, false, widgetId);
+        var item = new TimerItem(Guid.NewGuid(), resolvedName, duration, duration, now, false, widgetId);
         _state.ActiveTimers.Add(item);
-        AddRecent(name, duration);
+        AddRecent(resolvedName, duration);
         Save();
         return item;
     }
