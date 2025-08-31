@@ -198,7 +198,11 @@ public sealed class WidgetProvider : IWidgetProvider
         string template = File.Exists(templatePath) ? File.ReadAllText(templatePath) : "{}";
 
         var active = Guid.TryParse(context.Id, out var wid) ? _service.GetActiveForWidget(wid) : null;
-        var recents = _service.GetRecents();
+        var recents = _service.GetRecents().Select(r => new
+        {
+            name = r.Name,
+            durationSeconds = (int)r.Duration.TotalSeconds
+        });
 
         var data = new
         {
