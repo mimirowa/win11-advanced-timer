@@ -209,7 +209,7 @@ public sealed class WidgetProvider : IWidgetProvider
             remainingText = active?.Remaining.ToString(),
             activeName = active?.Name,
             activeId = active?.Id,
-            recents
+            recents = recents
         };
         string dataJson = JsonSerializer.Serialize(data);
 
