@@ -3,24 +3,37 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using AdvancedTimer.Core;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Threading;
 
 namespace AdvancedTimer.App;
 
-public sealed partial class TimerHudWindow : Window
+public class TimerHudWindow : Window
 {
+    private readonly TimerHudView _view;
     private readonly TimerService _service;
     private readonly Guid _timerId;
     private DispatcherTimer? _dispatcher;
 
     public TimerHudWindow(TimerService service, TimerItem item, bool scheduleToast = true)
     {
-        this.InitializeComponent();
+        Title = "Timer";
+        Width = 260;
+        Height = 160;
+
+        _view = new TimerHudView();
+        Content = _view;
+
         _service = service;
         _timerId = item.Id;
         if (scheduleToast)
             NotificationHelper.ScheduleToast(item);
+
+        _view.PauseButton.Click += OnPause;
+        _view.ResumeButton.Click += OnResume;
+        _view.RestartButton.Click += OnRestart;
+        _view.CancelButton.Click += OnCancel;
+        _view.TopMostToggle.Checked += OnTopMost;
+        _view.TopMostToggle.Unchecked += OnTopMost;
 
         _dispatcher = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
         _dispatcher.Tick += OnTick;
@@ -30,39 +43,30 @@ public sealed partial class TimerHudWindow : Window
         Closed += OnClosed;
     }
 
-    private void OnTick(object? sender, object? e)
-    {
-        Update();
-    }
+    private void OnTick(object? sender, object? e) => Update();
 
     private void Update()
     {
         var current = _service.GetAllActive().FirstOrDefault(t => t.Id == _timerId);
         if (current == null)
         {
-            this.Close();
+            Close();
             return;
         }
 
-        CountdownText.Text = current.Remaining.ToString(@"hh\:mm\:ss");
-        PauseButton.IsEnabled = !current.IsPaused;
-        ResumeButton.IsEnabled = current.IsPaused;
+        _view.CountdownText.Text = current.Remaining.ToString(@"hh\:mm\:ss");
+        _view.PauseButton.IsEnabled = !current.IsPaused;
+        _view.ResumeButton.IsEnabled = current.IsPaused;
     }
 
-    private void OnPause(object sender, RoutedEventArgs e)
-    {
-        _service.Pause(_timerId);
-    }
+    private void OnPause(object sender, RoutedEventArgs e) => _service.Pause(_timerId);
 
-    private void OnResume(object sender, RoutedEventArgs e)
-    {
-        _service.Resume(_timerId);
-    }
+    private void OnResume(object sender, RoutedEventArgs e) => _service.Resume(_timerId);
 
     private void OnCancel(object sender, RoutedEventArgs e)
     {
         _service.Cancel(_timerId);
-        this.Close();
+        Close();
     }
 
     private void OnClosed(object sender, WindowEventArgs e)
@@ -86,7 +90,7 @@ public sealed partial class TimerHudWindow : Window
     {
         var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
         SetWindowPos(hwnd,
-            TopMostToggle.IsChecked == true ? HWND_TOPMOST : HWND_NOTOPMOST,
+            _view.TopMostToggle.IsChecked == true ? HWND_TOPMOST : HWND_NOTOPMOST,
             0, 0, 0, 0,
             SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
     }
@@ -101,4 +105,3 @@ public sealed partial class TimerHudWindow : Window
     private const uint SWP_NOMOVE = 0x0002;
     private const uint SWP_SHOWWINDOW = 0x0040;
 }
-

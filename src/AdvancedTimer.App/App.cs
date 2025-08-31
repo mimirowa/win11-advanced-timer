@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml;
 
 namespace AdvancedTimer.App;
 
-public partial class App : Application
+public class App : Application
 {
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
