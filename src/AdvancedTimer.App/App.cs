@@ -1,0 +1,19 @@
+using AdvancedTimer.Core;
+using Microsoft.UI.Xaml;
+
+namespace AdvancedTimer.App;
+
+public partial class App : Application
+{
+    protected override void OnLaunched(LaunchActivatedEventArgs args)
+    {
+        // Application entry point. Timers are shown on demand.
+    }
+
+    public static void ShowTimer(TimerItem item)
+    {
+        var window = new TimerHudWindow(Program.TimerService, item);
+        window.Activate();
+    }
+}
+
