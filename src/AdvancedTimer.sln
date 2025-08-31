@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedTimer.Core", "AdvancedTimer.Core/AdvancedTimer.Core.csproj", "{FB1DFA22-16FC-4029-9E1C-FE80833E6904}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedTimer.App", "AdvancedTimer.App/AdvancedTimer.App.csproj", "{1A8D723A-272F-4D96-9C19-FD0A0CC6589B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedTimer.WidgetProvider", "AdvancedTimer.WidgetProvider/AdvancedTimer.WidgetProvider.csproj", "{B9D1D708-7498-454C-B110-81E9B94D3336}"
+EndProject
+Global
+  GlobalSection(SolutionConfigurationPlatforms) = preSolution
+    Debug|Any CPU = Debug|Any CPU
+    Release|Any CPU = Release|Any CPU
+  EndGlobalSection
+  GlobalSection(ProjectConfigurationPlatforms) = postSolution
+    {FB1DFA22-16FC-4029-9E1C-FE80833E6904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+    {FB1DFA22-16FC-4029-9E1C-FE80833E6904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+    {FB1DFA22-16FC-4029-9E1C-FE80833E6904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+    {FB1DFA22-16FC-4029-9E1C-FE80833E6904}.Release|Any CPU.Build.0 = Release|Any CPU
+    {1A8D723A-272F-4D96-9C19-FD0A0CC6589B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+    {1A8D723A-272F-4D96-9C19-FD0A0CC6589B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+    {1A8D723A-272F-4D96-9C19-FD0A0CC6589B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+    {1A8D723A-272F-4D96-9C19-FD0A0CC6589B}.Release|Any CPU.Build.0 = Release|Any CPU
+    {B9D1D708-7498-454C-B110-81E9B94D3336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+    {B9D1D708-7498-454C-B110-81E9B94D3336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+    {B9D1D708-7498-454C-B110-81E9B94D3336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+    {B9D1D708-7498-454C-B110-81E9B94D3336}.Release|Any CPU.Build.0 = Release|Any CPU
+  EndGlobalSection
+EndGlobal
