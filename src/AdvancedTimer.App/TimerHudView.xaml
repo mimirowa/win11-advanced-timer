@@ -1,0 +1,14 @@
+<UserControl x:Class="AdvancedTimer.App.TimerHudView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
+        <TextBlock x:Name="CountdownTextBlock" FontSize="36" HorizontalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="4">
+            <Button x:Name="PauseButtonControl" Content="Pause"/>
+            <Button x:Name="ResumeButtonControl" Content="Resume"/>
+            <Button x:Name="RestartButtonControl" Content="Restart"/>
+            <Button x:Name="CancelButtonControl" Content="Cancel"/>
+        </StackPanel>
+        <CheckBox x:Name="TopMostToggleControl" Content="Always on top"/>
+    </StackPanel>
+</UserControl>

@@ -7,7 +7,7 @@ using Microsoft.Windows.AppNotifications;
 
 namespace AdvancedTimer.App;
 
-public partial class Program
+public class Program
 {
     private static TimerService? _timerService;
     internal static TimerService TimerService => _timerService!;
