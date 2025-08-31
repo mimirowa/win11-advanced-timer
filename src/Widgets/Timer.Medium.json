@@ -1,4 +1,163 @@
 {
-  "name": "Timer.Medium",
-  "description": "Placeholder medium timer widget"
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Timer",
+      "weight": "Bolder",
+      "size": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "00:00",
+      "horizontalAlignment": "Center",
+      "size": "ExtraLarge"
+    },
+    {
+      "type": "ActionSet",
+      "actions": [
+        {
+          "type": "Action.Execute",
+          "title": "Pause",
+          "verb": "pause"
+        },
+        {
+          "type": "Action.Execute",
+          "title": "Resume",
+          "verb": "resume"
+        },
+        {
+          "type": "Action.Execute",
+          "title": "Cancel",
+          "verb": "cancel"
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Presets",
+      "weight": "Bolder"
+    },
+    {
+      "type": "ActionSet",
+      "actions": [
+        {
+          "type": "Action.Execute",
+          "title": "1 min",
+          "verb": "startPreset",
+          "data": { "seconds": 60 }
+        },
+        {
+          "type": "Action.Execute",
+          "title": "5 min",
+          "verb": "startPreset",
+          "data": { "seconds": 300 }
+        },
+        {
+          "type": "Action.Execute",
+          "title": "10 min",
+          "verb": "startPreset",
+          "data": { "seconds": 600 }
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Custom",
+      "weight": "Bolder"
+    },
+    {
+      "type": "Input.Number",
+      "id": "minutes",
+      "min": 0,
+      "placeholder": "Minutes"
+    },
+    {
+      "type": "Input.Number",
+      "id": "seconds",
+      "min": 0,
+      "placeholder": "Seconds"
+    },
+    {
+      "type": "ActionSet",
+      "actions": [
+        {
+          "type": "Action.Execute",
+          "title": "Start",
+          "verb": "startCustom"
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Recents",
+      "weight": "Bolder"
+    },
+    {
+      "type": "Table",
+      "columns": [
+        { "width": 1 },
+        { "width": 1 }
+      ],
+      "rows": [
+        {
+          "cells": [
+            {
+              "type": "TableCell",
+              "items": [ { "type": "TextBlock", "text": "1 min" } ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "ActionSet",
+                  "actions": [
+                    {
+                      "type": "Action.Execute",
+                      "title": "Restart",
+                      "verb": "restartRecent",
+                      "data": { "seconds": 60 }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "cells": [
+            {
+              "type": "TableCell",
+              "items": [ { "type": "TextBlock", "text": "5 min" } ]
+            },
+            {
+              "type": "TableCell",
+              "items": [
+                {
+                  "type": "ActionSet",
+                  "actions": [
+                    {
+                      "type": "Action.Execute",
+                      "title": "Restart",
+                      "verb": "restartRecent",
+                      "data": { "seconds": 300 }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Execute",
+      "title": "Open HUD",
+      "verb": "openHud"
+    }
+  ]
 }
