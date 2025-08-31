@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using AdvancedTimer.Core;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
@@ -52,6 +53,18 @@ public partial class Program
                     if (item != null)
                     {
                         NotificationHelper.ScheduleToast(item);
+                    }
+                }
+            }
+            else if (uri.Host.Equals("hud", StringComparison.OrdinalIgnoreCase))
+            {
+                var id = GetTimerIdFromUri(uri);
+                if (id != null)
+                {
+                    var item = _timerService?.GetAllActive().FirstOrDefault(t => t.Id == id.Value);
+                    if (item != null)
+                    {
+                        App.ShowTimer(item);
                     }
                 }
             }

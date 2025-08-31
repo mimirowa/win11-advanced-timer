@@ -152,7 +152,7 @@ public sealed class WidgetProvider : IWidgetProvider
                 {
                     try
                     {
-                        Process.Start(new ProcessStartInfo($"advancedtimer://restart?timerId={idh}") { UseShellExecute = true });
+                        Process.Start(new ProcessStartInfo($"advancedtimer://hud?timerId={idh}") { UseShellExecute = true });
                     }
                     catch { }
                 }
