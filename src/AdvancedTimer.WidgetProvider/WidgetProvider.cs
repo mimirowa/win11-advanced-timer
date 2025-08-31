@@ -5,6 +5,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using AdvancedTimer.Core;
+using AdvancedTimer.App;
 using Microsoft.Windows.Widgets;
 using Microsoft.Windows.Widgets.Providers;
 
@@ -103,7 +104,8 @@ public sealed class WidgetProvider : IWidgetProvider
                 }
                 if (dur > TimeSpan.Zero)
                 {
-                    _service.Start(dur, name, wid);
+                    var item = _service.Start(dur, name, wid);
+                    NotificationHelper.ScheduleToast(item);
                 }
                 break;
             }
@@ -125,7 +127,8 @@ public sealed class WidgetProvider : IWidgetProvider
                 }
                 if (dur > TimeSpan.Zero)
                 {
-                    _service.Start(dur, name, wid);
+                    var item = _service.Start(dur, name, wid);
+                    NotificationHelper.ScheduleToast(item);
                 }
                 break;
             }
