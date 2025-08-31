@@ -10,9 +10,9 @@ public partial class App : Application
         // Application entry point. Timers are shown on demand.
     }
 
-    public static void ShowTimer(TimerItem item)
+    public static void ShowTimer(TimerItem item, bool scheduleToast = true)
     {
-        var window = new TimerHudWindow(Program.TimerService, item);
+        var window = new TimerHudWindow(Program.TimerService, item, scheduleToast);
         window.Activate();
     }
 }

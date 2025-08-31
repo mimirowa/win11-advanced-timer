@@ -14,12 +14,13 @@ public sealed partial class TimerHudWindow : Window
     private readonly Guid _timerId;
     private DispatcherTimer? _dispatcher;
 
-    public TimerHudWindow(TimerService service, TimerItem item)
+    public TimerHudWindow(TimerService service, TimerItem item, bool scheduleToast = true)
     {
         this.InitializeComponent();
         _service = service;
         _timerId = item.Id;
-        NotificationHelper.ScheduleToast(item);
+        if (scheduleToast)
+            NotificationHelper.ScheduleToast(item);
 
         _dispatcher = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
         _dispatcher.Tick += OnTick;

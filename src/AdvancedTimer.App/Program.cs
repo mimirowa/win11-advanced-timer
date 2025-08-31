@@ -64,7 +64,7 @@ public partial class Program
                     var item = _timerService?.GetAllActive().FirstOrDefault(t => t.Id == id.Value);
                     if (item != null)
                     {
-                        App.ShowTimer(item);
+                        App.ShowTimer(item, false);
                     }
                 }
             }
