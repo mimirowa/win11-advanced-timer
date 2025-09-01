@@ -1,7 +1,7 @@
 using System;
 using AdvancedTimer.Core;
-using Microsoft.Windows.AppNotifications;
-using Microsoft.Windows.AppNotifications.Builder;
+using Windows.UI.Notifications;
+using CommunityToolkit.WinUI.Notifications;
 
 namespace AdvancedTimer.App;
 
@@ -9,15 +9,19 @@ public static class NotificationHelper
 {
     public static void ScheduleToast(TimerItem item)
     {
-        var builder = new AppNotificationBuilder()
+        var builder = new ToastContentBuilder()
             .AddText($"{item.Name} finished")
-            .AddArgument("timerId", item.Id.ToString())
-            .AddButton(new AppNotificationButton("Restart", $"advancedtimer://restart?timerId={item.Id}"));
+            .AddButton(new ToastButton()
+                .SetContent("Restart")
+                .SetProtocolActivation(new Uri($"advancedtimer://restart?timerId={item.Id}")))
+            .AddToastActivationInfo($"advancedtimer://restart?timerId={item.Id}", ToastActivationType.Protocol);
 
-        var notification = builder.BuildNotification();
-        var scheduleTime = DateTimeOffset.UtcNow.Add(item.Remaining);
-        var schedule = new AppNotificationSchedule(notification, scheduleTime);
-        AppNotificationManager.Default.AddToSchedule(schedule);
+        var content = builder.GetToastContent();
+        var xml = content.GetXml();
+
+        var scheduleTime = DateTimeOffset.Now.Add(item.Remaining);
+        var notifier = ToastNotificationManager.CreateToastNotifier();
+        var scheduled = new ScheduledToastNotification(xml, scheduleTime);
+        notifier.AddToSchedule(scheduled);
     }
 }
-
