@@ -77,6 +77,13 @@ public class TimerHudWindow : Window
             _dispatcher.Tick -= OnTick;
             _dispatcher = null;
         }
+
+        _view.PauseButton.Click -= OnPause;
+        _view.ResumeButton.Click -= OnResume;
+        _view.RestartButton.Click -= OnRestart;
+        _view.CancelButton.Click -= OnCancel;
+        _view.TopMostToggle.Checked -= OnTopMost;
+        _view.TopMostToggle.Unchecked -= OnTopMost;
     }
 
     private void OnRestart(object sender, RoutedEventArgs e)
