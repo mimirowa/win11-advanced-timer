@@ -106,7 +106,7 @@
       ],
       "rows": [
         {
-          "$data": "${data.recents}",
+          "$data": "${recents}",
           "cells": [
             {
               "type": "TableCell",
