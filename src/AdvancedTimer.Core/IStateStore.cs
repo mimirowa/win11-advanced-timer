@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace AdvancedTimer.Core;
 
 public interface IStateStore
 {
-    AppState Load();
-    void Save(AppState state);
+    Task<AppState> LoadAsync();
+    Task SaveAsync(AppState state);
 }

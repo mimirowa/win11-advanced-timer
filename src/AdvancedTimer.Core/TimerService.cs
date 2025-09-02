@@ -17,7 +17,7 @@ public class TimerService
     public TimerService(IStateStore store)
     {
         _store = store;
-        _state = _store.Load();
+        _state = _store.LoadAsync().GetAwaiter().GetResult();
     }
 
     public TimerItem Start(TimeSpan duration, string? name = null, Guid? widgetId = null)
@@ -125,9 +125,9 @@ public class TimerService
 
     private string GenerateName() => $"Timer {_nameCounter++}";
 
-    private void Save()
+    private async void Save()
     {
-        _store.Save(_state);
+        await _store.SaveAsync(_state);
         StateChanged?.Invoke(this, _state);
     }
 }

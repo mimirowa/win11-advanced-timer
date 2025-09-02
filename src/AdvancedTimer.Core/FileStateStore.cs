@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace AdvancedTimer.Core;
 
@@ -17,13 +18,13 @@ public class FileStateStore : IStateStore
         _path = Path.Combine(dir, "state.json");
     }
 
-    public AppState Load()
+    public async Task<AppState> LoadAsync()
     {
         if (!File.Exists(_path))
             return new AppState();
         try
         {
-            var json = File.ReadAllText(_path);
+            var json = await File.ReadAllTextAsync(_path);
             var state = JsonSerializer.Deserialize<AppState>(json, _jsonOptions);
             if (state == null || state.Version != AppState.CurrentVersion)
                 return new AppState();
@@ -35,11 +36,11 @@ public class FileStateStore : IStateStore
         }
     }
 
-    public void Save(AppState state)
+    public async Task SaveAsync(AppState state)
     {
         var json = JsonSerializer.Serialize(state, _jsonOptions);
         var tempFile = _path + ".tmp";
-        File.WriteAllText(tempFile, json);
+        await File.WriteAllTextAsync(tempFile, json);
         if (File.Exists(_path))
         {
             File.Replace(tempFile, _path, null);
