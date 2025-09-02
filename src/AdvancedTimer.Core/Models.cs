@@ -6,9 +6,9 @@ namespace AdvancedTimer.Core;
 public record TimerItem(
     Guid Id,
     string Name,
-    TimeSpan OriginalDuration,
-    TimeSpan Remaining,
-    DateTimeOffset StartedAt,
+    TimeSpan Duration,
+    DateTimeOffset StartUtc,
+    DateTimeOffset EndUtc,
     bool IsPaused,
     Guid? WidgetId);
 

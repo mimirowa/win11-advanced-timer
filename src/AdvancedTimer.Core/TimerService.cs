@@ -24,7 +24,7 @@ public class TimerService
     {
         var resolvedName = string.IsNullOrWhiteSpace(name) ? GenerateName() : name;
         var now = DateTimeOffset.UtcNow;
-        var item = new TimerItem(Guid.NewGuid(), resolvedName, duration, duration, now, false, widgetId);
+        var item = new TimerItem(Guid.NewGuid(), resolvedName, duration, now, now + duration, false, widgetId);
         _state.ActiveTimers.Add(item);
         AddRecent(resolvedName, duration);
         Save();
@@ -37,7 +37,7 @@ public class TimerService
         if (index < 0) throw new InvalidOperationException("Timer not found");
         var now = DateTimeOffset.UtcNow;
         var item = _state.ActiveTimers[index];
-        item = item with { Remaining = item.OriginalDuration, StartedAt = now, IsPaused = false };
+        item = item with { StartUtc = now, EndUtc = now + item.Duration, IsPaused = false };
         _state.ActiveTimers[index] = item;
         Save();
         return item;
@@ -51,9 +51,9 @@ public class TimerService
         if (!item.IsPaused)
         {
             var now = DateTimeOffset.UtcNow;
-            var remaining = item.Remaining - (now - item.StartedAt);
+            var remaining = item.EndUtc - now;
             if (remaining < TimeSpan.Zero) remaining = TimeSpan.Zero;
-            item = item with { Remaining = remaining, IsPaused = true };
+            item = item with { StartUtc = now, EndUtc = now + remaining, IsPaused = true };
             _state.ActiveTimers[index] = item;
             Save();
         }
@@ -67,7 +67,9 @@ public class TimerService
         var item = _state.ActiveTimers[index];
         if (item.IsPaused)
         {
-            item = item with { StartedAt = DateTimeOffset.UtcNow, IsPaused = false };
+            var now = DateTimeOffset.UtcNow;
+            var remaining = item.EndUtc - item.StartUtc;
+            item = item with { StartUtc = now, EndUtc = now + remaining, IsPaused = false };
             _state.ActiveTimers[index] = item;
             Save();
         }
@@ -85,13 +87,12 @@ public class TimerService
 
     public TimerItem? GetActiveForWidget(Guid widgetId)
     {
-        var timer = _state.ActiveTimers.FirstOrDefault(t => t.WidgetId == widgetId);
-        return timer == null ? null : UpdateForDisplay(timer);
+        return _state.ActiveTimers.FirstOrDefault(t => t.WidgetId == widgetId);
     }
 
     public IReadOnlyList<TimerItem> GetAllActive()
     {
-        return _state.ActiveTimers.Select(UpdateForDisplay).ToList();
+        return _state.ActiveTimers.ToList();
     }
 
     public IReadOnlyList<RecentItem> GetRecents()
@@ -99,14 +100,16 @@ public class TimerService
         return _state.Recents.ToList();
     }
 
-    private TimerItem UpdateForDisplay(TimerItem item)
+    public TimeSpan GetRemaining(TimerItem item)
     {
         if (item.IsPaused)
-            return item;
-        var now = DateTimeOffset.UtcNow;
-        var remaining = item.Remaining - (now - item.StartedAt);
-        if (remaining < TimeSpan.Zero) remaining = TimeSpan.Zero;
-        return item with { Remaining = remaining };
+        {
+            var remaining = item.EndUtc - item.StartUtc;
+            return remaining < TimeSpan.Zero ? TimeSpan.Zero : remaining;
+        }
+
+        var rem = item.EndUtc - DateTimeOffset.UtcNow;
+        return rem < TimeSpan.Zero ? TimeSpan.Zero : rem;
     }
 
     private void AddRecent(string name, TimeSpan duration)

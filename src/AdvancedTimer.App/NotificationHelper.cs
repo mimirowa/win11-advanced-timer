@@ -19,7 +19,7 @@ public static class NotificationHelper
         var content = builder.GetToastContent();
         var xml = content.GetXml();
 
-        var scheduleTime = DateTimeOffset.Now.Add(item.Remaining);
+        var scheduleTime = item.EndUtc.ToLocalTime();
         var notifier = ToastNotificationManager.CreateToastNotifier();
         var scheduled = new ScheduledToastNotification(xml, scheduleTime);
         notifier.AddToSchedule(scheduled);

@@ -54,7 +54,8 @@ public class TimerHudWindow : Window
             return;
         }
 
-        _view.CountdownText.Text = current.Remaining.ToString(@"hh\:mm\:ss");
+        var remaining = _service.GetRemaining(current);
+        _view.CountdownText.Text = remaining.ToString(@"hh\:mm\:ss");
         _view.PauseButton.IsEnabled = !current.IsPaused;
         _view.ResumeButton.IsEnabled = current.IsPaused;
     }
