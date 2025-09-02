@@ -206,7 +206,7 @@ public sealed class WidgetProvider : IWidgetProvider
 
         var data = new
         {
-            remainingText = active?.Remaining.ToString(),
+            remainingText = active != null ? _service.GetRemaining(active).ToString() : null,
             activeName = active?.Name,
             activeId = active?.Id,
             recents = recents
